@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -55,6 +56,18 @@ public class TodoServiceTest {
 
 		assertTrue(optionalTodo.isPresent());
 		assertEquals("title", optionalTodo.get().getTitle());
+	}
+
+	@Test
+	void testGetAllTodos() {
+		Todo todo = new Todo(1L, "title", false);
+
+		when(this.todoRepository.findAll()).thenReturn(List.of(todo));
+
+		List<Todo> todos = this.todoService.getAllTodos();
+
+		assertEquals(1, todos.size());
+		assertEquals(todo, todos.get(0));
 	}
 
 }

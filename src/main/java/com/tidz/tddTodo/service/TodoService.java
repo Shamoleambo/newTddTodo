@@ -1,5 +1,6 @@
 package com.tidz.tddTodo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,9 @@ public class TodoService {
 
 	public Optional<Todo> getTodoById(Long id) {
 		return this.todoRepository.findById(id);
+	}
+
+	public List<Todo> getAllTodos() {
+		return this.todoRepository.findAll();
 	}
 }
