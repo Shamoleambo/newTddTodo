@@ -1,9 +1,12 @@
 package com.tidz.tddTodo.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +41,20 @@ public class TodoServiceTest {
 
 		assertEquals("title", createdTodo.getTitle());
 		verify(this.todoRepository, times(1)).save(todo);
+	}
+
+	@Test
+	void testGetTodo() {
+		Todo todo = new Todo();
+		todo.setId(1L);
+		todo.setTitle("title");
+
+		when(this.todoRepository.findById(1L)).thenReturn(Optional.of(todo));
+
+		Optional<Todo> optionalTodo = this.todoService.getTodoById(1L);
+
+		assertTrue(optionalTodo.isPresent());
+		assertEquals("title", optionalTodo.get().getTitle());
 	}
 
 }
