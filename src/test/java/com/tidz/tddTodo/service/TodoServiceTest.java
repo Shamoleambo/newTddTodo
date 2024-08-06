@@ -81,5 +81,21 @@ public class TodoServiceTest {
 		assertEquals("title", updatedTodo.getTitle());
 		assertEquals(1L, updatedTodo.getId());
 	}
+	
+	@Test
+	void testDelteTodoById() {
+		Todo todo = new Todo(1L, "title", false);
+		
+		when(this.todoRepository.findAll()).thenReturn(List.of(todo));
+		
+		List<Todo> todosBefore = this.todoService.getAllTodos();
+		this.todoService.deleteTodoById(1L);
+
+		when(this.todoRepository.findAll()).thenReturn(List.of());
+		List<Todo> todosAfter = this.todoService.getAllTodos();
+		
+		assertEquals(1, todosBefore.size());
+		assertEquals(0, todosAfter.size());
+	}
 
 }
